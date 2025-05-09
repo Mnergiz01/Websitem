@@ -9,7 +9,7 @@
               <span class="text-blue-600 dark:text-blue-400">{{ profile.lastName || 'Muzaffer' }}</span>.
             </h1>
             <p class="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-6">
-              {{ profile.headline || 'Profesyonel Yazılım Geliştirici' }}
+              {{ profile.headline || 'Junior Yazılım Geliştirici' }}
             </p>
             <p class="text-gray-600 dark:text-gray-400 mb-8 max-w-lg">
               {{ profile.summary || 'Yaratıcı çözümler geliştirmeye ve yeni teknolojiler öğrenmeye tutkulu bir yazılım geliştiriciyim. Kullanıcı dostu, ölçeklenebilir ve güvenli uygulamalar oluşturmaya odaklanıyorum.' }}

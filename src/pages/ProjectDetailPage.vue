@@ -42,12 +42,24 @@
                 </div>
 
                 <!-- Project Header -->
-                <div class="flex flex-col md:flex-row items-start mb-10">
+                <div class="flex flex-col md:flex-row items-start mb-10 gap-8">
                     <!-- Project Image -->
-                    <div class="w-full md:w-2/5 mb-6 md:mb-0 md:pr-8">
-                        <div class="relative rounded-xl overflow-hidden shadow-xl h-80">
-                            <img :src="project.image || getProjectImagePlaceholder(project.id)" :alt="project.title"
-                                class="w-full h-full object-cover" />
+                    <div class="w-full md:w-2/5">
+                        <div
+                            class="relative rounded-xl overflow-hidden shadow-xl h-80 bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
+                            <template v-if="project.image_url">
+                                <img :src="project.image_url" :alt="project.title" class="w-full h-full object-cover" />
+                            </template>
+                            <template v-else>
+                                <div class="text-gray-400 dark:text-gray-500 text-center p-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                    <p class="mt-2">Proje görseli yok</p>
+                                </div>
+                            </template>
                         </div>
                     </div>
 
@@ -57,55 +69,110 @@
                             {{ project.title }}
                         </h1>
 
-                        <!-- Tags -->
-                        <div class="mb-6">
-                            <span v-for="tag in (project.tags || '').split(',')" :key="tag"
-                                class="inline-block px-3 py-1 text-sm rounded-full bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 mr-2 mb-2">
-                                {{ tag.trim() }}
+                        <!-- Featured Badge -->
+                        <div v-if="project.featured" class="mb-4">
+                            <span
+                                class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20"
+                                    fill="currentColor">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                                Öne Çıkan Proje
                             </span>
                         </div>
 
-                        <!-- Links -->
-                        <div class="flex flex-wrap mb-6">
-                            <a v-if="project.projectUrl" :href="project.projectUrl" target="_blank"
-                                rel="noopener noreferrer"
-                                class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg mr-3 mb-3 transition-colors">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-                                </svg>
-                                Canlı Demo
-                            </a>
+                        <!-- Short Description -->
+                        <div v-if="project.short_description"
+                            class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 mb-6">
+                            <p class="text-blue-800 dark:text-blue-200">
+                                {{ project.short_description }}
+                            </p>
+                        </div>
 
-                            <a v-if="project.sourceCodeUrl" :href="project.sourceCodeUrl" target="_blank"
-                                rel="noopener noreferrer"
-                                class="inline-flex items-center px-4 py-2 bg-gray-800 hover:bg-gray-900 dark:bg-gray-700 dark:hover:bg-gray-600 text-white rounded-lg mb-3 transition-colors">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path
-                                        d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                                </svg>
-                                Kaynak Kodu
-                            </a>
+                        <!-- Project Metadata Section -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                            <!-- Links Section -->
+                            <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-500"
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                                    </svg>
+                                    Proje Linkleri
+                                </h3>
+
+                                <div v-if="project.project_url" class="mb-4">
+                                    <div class="flex items-start">
+                                        <span
+                                            class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-sm px-3 py-1 rounded mr-3 mt-1">Live</span>
+                                        <div>
+                                            <a :href="project.project_url" target="_blank" rel="noopener noreferrer"
+                                                class="text-blue-600 dark:text-blue-400 hover:underline break-all">
+                                                {{ project.project_url }}
+                                            </a>
+                                            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Canlı proje linki
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div v-if="project.github_url" class="flex items-start">
+                                    <span
+                                        class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-sm px-3 py-1 rounded mr-3 mt-1">GitHub</span>
+                                    <div>
+                                        <a :href="project.github_url" target="_blank" rel="noopener noreferrer"
+                                            class="text-blue-600 dark:text-blue-400 hover:underline break-all">
+                                            {{ project.github_url }}
+                                        </a>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Projenin kaynak kodları
+                                        </p>
+                                    </div>
+                                </div>
+                                <div v-if="!project.project_url && !project.github_url"
+                                    class="text-gray-500 dark:text-gray-400 text-sm">
+                                    Proje linkleri bulunmamaktadır
+                                </div>
+                            </div>
+
+                            <!-- Technologies Section -->
+                            <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-green-500"
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                    </svg>
+                                    Kullanılan Teknolojiler
+                                </h3>
+
+                                <div v-if="hasTechStack" class="flex flex-wrap gap-2">
+                                    <span v-for="(tech, index) in formattedTechStack" :key="index"
+                                        class="inline-flex items-center px-3 py-1 rounded-full bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-sm">
+                                        {{ tech }}
+                                    </span>
+                                </div>
+                                <div v-else class="text-gray-500 dark:text-gray-400 text-sm">
+                                    Teknoloji bilgisi girilmemiş
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Project Description -->
-                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-8 mb-10">
+                <div v-if="project.description" class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-8 mb-10">
                     <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
                         Proje Açıklaması
                     </h2>
                     <div class="prose prose-lg dark:prose-invert max-w-none">
-                        <p class="text-gray-700 dark:text-gray-300 whitespace-pre-line">
-                            {{ project.description }}
-                        </p>
+                        {{ project.description }}
                     </div>
                 </div>
 
                 <!-- Other Projects -->
-                <div>
+                <div class="mt-16">
                     <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">
                         Diğer Projeler
                     </h2>
@@ -118,18 +185,35 @@
                     <div v-else class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div v-for="relatedProject in relatedProjects" :key="relatedProject.id"
                             class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-transform duration-200 hover:-translate-y-1">
-                            <div class="h-40 overflow-hidden">
-                                <img :src="relatedProject.image || getProjectImagePlaceholder(relatedProject.id)"
-                                    :alt="relatedProject.title" class="w-full h-full object-cover" />
+                            <div
+                                class="h-40 overflow-hidden bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
+                                <template v-if="relatedProject.image_url">
+                                    <img :src="relatedProject.image_url" :alt="relatedProject.title"
+                                        class="w-full h-full object-cover" />
+                                </template>
+                                <template v-else>
+                                    <div class="text-gray-400 dark:text-gray-500">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                        </svg>
+                                    </div>
+                                </template>
                             </div>
                             <div class="p-4">
                                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                                     {{ relatedProject.title }}
                                 </h3>
-                                <div class="mb-3">
-                                    <span v-for="tag in (relatedProject.tags || '').split(',').slice(0, 2)" :key="tag"
+                                <p v-if="relatedProject.short_description"
+                                    class="text-gray-600 dark:text-gray-400 text-sm mb-3 line-clamp-2">
+                                    {{ relatedProject.short_description }}
+                                </p>
+                                <div v-if="relatedProject.tech_stack" class="mb-3">
+                                    <span v-for="tag in formattedTechStack(relatedProject.tech_stack).slice(0, 2)"
+                                        :key="tag"
                                         class="inline-block px-2 py-1 text-xs rounded-full bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 mr-1 mb-1">
-                                        {{ tag.trim() }}
+                                        {{ tag }}
                                     </span>
                                 </div>
                                 <router-link :to="{ name: 'ProjectDetail', params: { id: relatedProject.id } }"
@@ -156,23 +240,58 @@ const projectsStore = useProjectsStore();
 const isLoading = ref(true);
 const error = ref(null);
 
-// Load project details on mount
-onMounted(async () => {
-    await loadProject();
+// Format tech stack data
+// Format tech stack data - GÜNCELLENDİ
+const formattedTechStack = computed(() => {
+    if (!project.value?.tech_stack) return [];
+
+    // Eğer tech_stack string ise (virgülle ayrılmış)
+    if (typeof project.value.tech_stack === 'string') {
+        return project.value.tech_stack
+            .split(',')
+            .map(tech => tech.trim())
+            .filter(tech => tech.length > 0);
+    }
+    // Eğer tech_stack array ise
+    else if (Array.isArray(project.value.tech_stack)) {
+        return project.value.tech_stack;
+    }
+    // Diğer durumlar
+    return [];
 });
 
-// Watch for route changes to reload project when navigating between project details
-watch(() => route.params.id, async () => {
-    isLoading.value = true;
-    await loadProject();
+// Computed properties - GÜNCELLENDİ
+const project = computed(() => {
+    if (!projectsStore.currentProject) return null;
+    return projectsStore.currentProject;
+});
+
+const hasTechStack = computed(() => {
+    return formattedTechStack.value.length > 0;
+});
+
+const relatedProjects = computed(() => {
+    if (!project.value || !projectsStore.projects.length) return [];
+
+    return projectsStore.projects
+        .filter(p => p.id !== project.value.id)
+        .sort((a, b) => {
+            // Featured projects first
+            if (a.featured && !b.featured) return -1;
+            if (!a.featured && b.featured) return 1;
+            // Then by order_index
+            return (a.order_index || 0) - (b.order_index || 0);
+        })
+        .slice(0, 3);
 });
 
 // Load project data
 const loadProject = async () => {
     try {
+        isLoading.value = true;
+        error.value = null;
         const projectId = route.params.id;
         await projectsStore.fetchProjectById(projectId);
-        error.value = null;
     } catch (err) {
         console.error("Error loading project:", err);
         error.value = err;
@@ -181,42 +300,12 @@ const loadProject = async () => {
     }
 };
 
-// Current project
-const project = computed(() => {
-    return projectsStore.currentProject;
+// Lifecycle hooks
+onMounted(() => {
+    loadProject();
 });
 
-// Get related projects (up to 3 different projects with similar tags)
-const relatedProjects = computed(() => {
-    if (!project.value || !projectsStore.projects.length) return [];
-
-    // Extract current project tags
-    const currentTags = project.value.tags ? project.value.tags.split(',').map(tag => tag.trim()) : [];
-
-    // Filter and score other projects based on tag similarity
-    return projectsStore.projects
-        .filter(p => p.id !== project.value.id) // Exclude current project
-        .map(p => {
-            const projectTags = p.tags ? p.tags.split(',').map(tag => tag.trim()) : [];
-            // Count how many matching tags
-            const matchingTags = projectTags.filter(tag => currentTags.includes(tag)).length;
-            return { ...p, score: matchingTags };
-        })
-        .sort((a, b) => b.score - a.score) // Sort by most matching tags
-        .slice(0, 3); // Limit to 3 projects
+watch(() => route.params.id, () => {
+    loadProject();
 });
-
-// Placeholder image for projects without images
-const getProjectImagePlaceholder = (id) => {
-    const images = [
-        '/src/assets/proje-gorseli-1.svg',
-        '/src/assets/proje-gorseli-2.svg',
-        '/src/assets/proje-gorseli-3.svg',
-        '/src/assets/proje-gorseli-4.svg'
-    ];
-
-    // Use the id to deterministically select an image
-    const index = parseInt(id, 10) % images.length;
-    return images[index];
-};
 </script>
