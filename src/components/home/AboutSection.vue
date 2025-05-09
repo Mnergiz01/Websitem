@@ -19,7 +19,7 @@
               <!-- Main image -->
               <div class="relative z-10 rounded-lg overflow-hidden shadow-xl">
                 <img 
-                  :src="profile.aboutImage || '/src/assets/foto4.jpeg'" 
+                  :src="profile.aboutImage || '/public/foto4.jpeg'" 
                   alt="Hakkımda Resmi" 
                   class="w-full h-auto"
                 />

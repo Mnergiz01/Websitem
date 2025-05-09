@@ -31,7 +31,7 @@
               <div class="absolute inset-0 bg-indigo-600 dark:bg-indigo-500 rounded-full opacity-10 transform rotate-6"></div>
               <div class="relative h-full w-full overflow-hidden rounded-full border-4 border-white dark:border-gray-800 shadow-xl">
                 <img 
-                  :src="profile.avatar || '/src/assets/foto5.jpeg'" 
+                  :src="profile.avatar || '/public/foto5.jpeg'" 
                   alt="Profesyonel Portre" 
                   class="h-full w-full object-cover"
                 />

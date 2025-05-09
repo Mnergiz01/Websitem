@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <!-- Background -->
+  <circle cx="200" cy="200" r="200" fill="#f0f4f8" />
+
+  <!-- Placeholder for profile image -->
+  <g>
+    <!-- Head shape -->
+    <circle cx="200" cy="160" r="75" fill="#dce6f1" />
+    
+    <!-- Body shape -->
+    <path d="M125 260 Q200 360 275 260" fill="#dce6f1" />
+    
+    <!-- Shoulders -->
+    <path d="M125 260 Q100 280 90 320" stroke="#dce6f1" stroke-width="30" fill="none" />
+    <path d="M275 260 Q300 280 310 320" stroke="#dce6f1" stroke-width="30" fill="none" />
+    
+    <!-- Face features -->
+    <circle cx="175" cy="150" r="5" fill="#5c7a99" /> <!-- Left eye -->
+    <circle cx="225" cy="150" r="5" fill="#5c7a99" /> <!-- Right eye -->
+    <path d="M190 180 Q200 190 210 180" fill="none" stroke="#5c7a99" stroke-width="3" /> <!-- Smile -->
+    
+    <!-- Abstract elements suggesting professional appearance -->
+    <rect x="165" y="210" width="70" height="20" rx="5" fill="#5c7a99" /> <!-- Tie or collar -->
+  </g>
+  
+  <!-- Decorative elements -->
+  <circle cx="80" cy="80" r="15" fill="#4a90e2" opacity="0.3" />
+  <circle cx="320" cy="100" r="10" fill="#4a90e2" opacity="0.2" />
+  <circle cx="50" cy="280" r="20" fill="#4a90e2" opacity="0.1" />
+  <circle cx="330" cy="330" r="25" fill="#4a90e2" opacity="0.2" />
+</svg>
