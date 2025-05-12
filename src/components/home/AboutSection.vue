@@ -19,7 +19,7 @@
               <!-- Main image -->
               <div class="relative z-10 rounded-lg overflow-hidden shadow-xl">
                 <img 
-                  :src="profile.aboutImage || '/foto4.jpeg'" 
+                  :src="profile.photo_url || '/foto4.jpeg'" 
                   alt="Hakkımda Resmi" 
                   class="w-full h-auto"
                 />
@@ -31,10 +31,10 @@
           <div class="md:w-3/5 md:pl-12">
             <div class="prose prose-lg dark:prose-invert max-w-none">
               <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-                {{ profile.aboutTitle || 'Yazılım Geliştirme Tutkum' }}
+                {{ profile.abouttitle || 'Yazılım Geliştirme Tutkum' }}
               </h3>
               
-              <div v-if="profile.aboutContent" v-html="profile.aboutContent"></div>
+              <div v-if="profile.aboutcontent" v-html="profile.aboutcontent"></div>
               <div v-else>
                 <p>
                   Merhaba! Ben bir yazılım geliştiriciyim ve teknoloji dünyasında 5+ yıllık deneyime sahibim. 
@@ -57,7 +57,7 @@
                     </svg>
                   </div>
                   <span class="ml-3 text-gray-700 dark:text-gray-300">
-                    {{ profile.birthDate || '25.10.2002' }}
+                    {{ formatDate(profile.birthdate) || '25.10.2002' }}
                   </span>
                 </div>
                 
@@ -91,7 +91,7 @@
                     </svg>
                   </div>
                   <span class="ml-3 text-gray-700 dark:text-gray-300">
-                    {{ profile.jobTitle || 'Juinor Yazılım Geliştirici' }}
+                    {{ profile.title || 'Juinor Yazılım Geliştirici' }}
                   </span>
                 </div>
               </div>
@@ -118,5 +118,13 @@
   const profile = computed(() => {
     return profileStore.profile;
   });
+  const formatDate = (dateStr) =>{
+    const date = new Date(dateStr);
+    return date.toLocaleDateString('tr-TR', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    });
+  }
   </script>
   

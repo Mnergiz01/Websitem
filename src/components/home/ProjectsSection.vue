@@ -29,7 +29,7 @@
           class="bg-white dark:bg-gray-700 rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:-translate-y-2">
           <!-- Project Image -->
           <div class="relative h-48 overflow-hidden">
-            <img :src="project.image || getProjectImagePlaceholder(project.id)" :alt="project.title"
+            <img :src="project.image_url || getProjectImagePlaceholder(project.id)" :alt="project.title"
               class="w-full h-full object-cover" />
             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
             <div class="absolute bottom-0 left-0 right-0 p-4">

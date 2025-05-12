@@ -11,15 +11,17 @@ export const projectService = {
         .from('projects')
         .select('*')
         .order('created_at', { ascending: false });
-      
-      if (error) throw handleSupabaseError(error, 'Failed to fetch projects');
-      
+
+      if (error) {
+        throw handleSupabaseError(error, 'Failed to fetch projects');
+      }
+
       return data || [];
     } catch (error) {
-      throw handleSupabaseError(error, 'Failed to fetch projects');
+      throw handleSupabaseError(error, 'Error occurred while fetching projects');
     }
   },
-  
+
   /**
    * Fetch a project by ID
    * @param {string|number} id - Project ID
@@ -32,15 +34,17 @@ export const projectService = {
         .select('*')
         .eq('id', id)
         .single();
-      
-      if (error) throw handleSupabaseError(error, `Failed to fetch project with ID: ${id}`);
-      
+
+      if (error) {
+        throw handleSupabaseError(error, `Failed to fetch project with ID: ${id}`);
+      }
+
       return data;
     } catch (error) {
-      throw handleSupabaseError(error, `Failed to fetch project with ID: ${id}`);
+      throw handleSupabaseError(error, `Error occurred while fetching project with ID: ${id}`);
     }
   },
-  
+
   /**
    * Create a new project
    * @param {Object} projectData - Project data
@@ -51,23 +55,25 @@ export const projectService = {
       // Add created_at timestamp
       const dataWithTimestamp = {
         ...projectData,
-        created_at: new Date().toISOString()
+        created_at: new Date().toISOString(),
       };
-      
+
       const { data, error } = await supabase
         .from('projects')
         .insert([dataWithTimestamp])
         .select()
         .single();
-      
-      if (error) throw handleSupabaseError(error, 'Failed to create project');
-      
+
+      if (error) {
+        throw handleSupabaseError(error, 'Failed to create project');
+      }
+
       return data;
     } catch (error) {
-      throw handleSupabaseError(error, 'Failed to create project');
+      throw handleSupabaseError(error, 'Error occurred while creating project');
     }
   },
-  
+
   /**
    * Update an existing project
    * @param {Object} projectData - Project data with ID
@@ -76,25 +82,27 @@ export const projectService = {
   async updateProject(projectData) {
     try {
       const { id, ...updateData } = projectData;
-      
+
       // Add updated_at timestamp
       updateData.updated_at = new Date().toISOString();
-      
+
       const { data, error } = await supabase
         .from('projects')
         .update(updateData)
         .eq('id', id)
         .select()
         .single();
-      
-      if (error) throw handleSupabaseError(error, `Failed to update project with ID: ${id}`);
-      
+
+      if (error) {
+        throw handleSupabaseError(error, `Failed to update project with ID: ${id}`);
+      }
+
       return data;
     } catch (error) {
-      throw handleSupabaseError(error, `Failed to update project with ID: ${projectData.id}`);
+      throw handleSupabaseError(error, `Error occurred while updating project with ID: ${projectData.id}`);
     }
   },
-  
+
   /**
    * Delete a project
    * @param {string|number} id - Project ID
@@ -106,10 +114,12 @@ export const projectService = {
         .from('projects')
         .delete()
         .eq('id', id);
-      
-      if (error) throw handleSupabaseError(error, `Failed to delete project with ID: ${id}`);
+
+      if (error) {
+        throw handleSupabaseError(error, `Failed to delete project with ID: ${id}`);
+      }
     } catch (error) {
-      throw handleSupabaseError(error, `Failed to delete project with ID: ${id}`);
+      throw handleSupabaseError(error, `Error occurred while deleting project with ID: ${id}`);
     }
   }
 };

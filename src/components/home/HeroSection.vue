@@ -9,10 +9,10 @@
               <span class="text-blue-600 dark:text-blue-400">{{ profile.lastName || 'Muzaffer' }}</span>.
             </h1>
             <p class="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-6">
-              {{ profile.headline || 'Junior Yazılım Geliştirici' }}
+              {{ profile.title || 'Junior Yazılım Geliştirici' }}
             </p>
             <p class="text-gray-600 dark:text-gray-400 mb-8 max-w-lg">
-              {{ profile.summary || 'Yaratıcı çözümler geliştirmeye ve yeni teknolojiler öğrenmeye tutkulu bir yazılım geliştiriciyim. Kullanıcı dostu, ölçeklenebilir ve güvenli uygulamalar oluşturmaya odaklanıyorum.' }}
+              {{ profile.bio || 'Yaratıcı çözümler geliştirmeye ve yeni teknolojiler öğrenmeye tutkulu bir yazılım geliştiriciyim. Kullanıcı dostu, ölçeklenebilir ve güvenli uygulamalar oluşturmaya odaklanıyorum.' }}
             </p>
             <div class="flex space-x-4">
               <router-link to="/projects" class="btn btn-primary">
@@ -31,7 +31,7 @@
               <div class="absolute inset-0 bg-indigo-600 dark:bg-indigo-500 rounded-full opacity-10 transform rotate-6"></div>
               <div class="relative h-full w-full overflow-hidden rounded-full border-4 border-white dark:border-gray-800 shadow-xl">
                 <img 
-                  :src="profile.avatar || '/foto5.jpeg'" 
+                  :src="profile.photo_url || '/foto5.jpeg'" 
                   alt="Profesyonel Portre" 
                   class="h-full w-full object-cover"
                 />

@@ -54,45 +54,45 @@
         
         <!-- Project URL -->
         <div class="mb-4">
-          <label for="projectUrl" class="form-label">Proje URL (Opsiyonel)</label>
+          <label for="project_url" class="form-label">Proje URL (Opsiyonel)</label>
           <input 
-            id="projectUrl"
-            v-model="form.projectUrl"
+            id="project_url"
+            v-model="form.project_url"
             type="url" 
             class="form-input"
-            :class="{ 'border-red-500 dark:border-red-500': errors.projectUrl }"
+            :class="{ 'border-red-500 dark:border-red-500': errors.project_url }"
             placeholder="https://example.com"
           />
-          <p v-if="errors.projectUrl" class="form-error">{{ errors.projectUrl }}</p>
+          <p v-if="errors.project_url" class="form-error">{{ errors.project_url }}</p>
         </div>
         
         <!-- Project Source Code URL -->
         <div class="mb-4">
-          <label for="sourceCodeUrl" class="form-label">Kaynak Kodu URL (Opsiyonel)</label>
+          <label for="github_url" class="form-label">Kaynak Kodu URL (Opsiyonel)</label>
           <input 
-            id="sourceCodeUrl"
-            v-model="form.sourceCodeUrl"
+            id="github_url"
+            v-model="form.github_url"
             type="url" 
             class="form-input"
-            :class="{ 'border-red-500 dark:border-red-500': errors.sourceCodeUrl }"
+            :class="{ 'border-red-500 dark:border-red-500': errors.github_url }"
             placeholder="https://github.com/username/repo"
           />
-          <p v-if="errors.sourceCodeUrl" class="form-error">{{ errors.sourceCodeUrl }}</p>
+          <p v-if="errors.github_url" class="form-error">{{ errors.github_url }}</p>
         </div>
         
-        <!-- Tags -->
+        <!-- tech_stack -->
         <div class="mb-4">
-          <label for="tags" class="form-label">Etiketler</label>
+          <label for="tech_stack" class="form-label">Etiketler</label>
           <input 
-            id="tags"
-            v-model="form.tags"
+            id="tech_stack"
+            v-model="form.tech_stack"
             type="text" 
             class="form-input"
-            :class="{ 'border-red-500 dark:border-red-500': errors.tags }"
+            :class="{ 'border-red-500 dark:border-red-500': errors.tech_stack }"
             placeholder="Vue.js, Tailwind, Firebase"
             required
           />
-          <p v-if="errors.tags" class="form-error">{{ errors.tags }}</p>
+          <p v-if="errors.tech_stack" class="form-error">{{ errors.tech_stack }}</p>
           <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
             Etiketleri virgülle ayırın
           </p>
@@ -163,20 +163,20 @@
   const form = reactive({
     title: '',
     description: '',
-    image: '',
-    projectUrl: '',
-    sourceCodeUrl: '',
-    tags: '',
+    image_url: '',
+    project_url: '',
+    github_url: '',
+    tech_stack: '',
     featured: false
   });
   
   const errors = reactive({
     title: '',
     description: '',
-    image: '',
-    projectUrl: '',
-    sourceCodeUrl: '',
-    tags: ''
+    image_url: '',
+    project_url: '',
+    github_url: '',
+    tech_stack: ''
   });
   
   // Determine if we're editing or creating
@@ -189,10 +189,10 @@
     if (props.project) {
       form.title = props.project.title || '';
       form.description = props.project.description || '';
-      form.image = props.project.image || '';
-      form.projectUrl = props.project.projectUrl || '';
-      form.sourceCodeUrl = props.project.sourceCodeUrl || '';
-      form.tags = props.project.tags || '';
+      form.image = props.project.image_url || '';
+      form.project_url = props.project.project_url || '';
+      form.github_url = props.project.github_url || '';
+      form.tech_stack = props.project.tech_stack || '';
       form.featured = props.project.featured || false;
     }
   });
@@ -201,10 +201,10 @@
     let isValid = true;
     errors.title = '';
     errors.description = '';
-    errors.image = '';
-    errors.projectUrl = '';
-    errors.sourceCodeUrl = '';
-    errors.tags = '';
+    errors.image_url = '';
+    errors.project_url = '';
+    errors.github_url = '';
+    errors.tech_stack = '';
     
     if (!form.title || form.title.trim() === '') {
       errors.title = 'Proje başlığı gereklidir';
@@ -221,18 +221,18 @@
       isValid = false;
     }
     
-    if (form.projectUrl && !isValidUrl(form.projectUrl)) {
-      errors.projectUrl = 'Geçerli bir URL giriniz';
+    if (form.project_url && !isValidUrl(form.project_url)) {
+      errors.project_url = 'Geçerli bir URL giriniz';
       isValid = false;
     }
     
-    if (form.sourceCodeUrl && !isValidUrl(form.sourceCodeUrl)) {
-      errors.sourceCodeUrl = 'Geçerli bir URL giriniz';
+    if (form.github_url && !isValidUrl(form.github_url)) {
+      errors.github_url = 'Geçerli bir URL giriniz';
       isValid = false;
     }
     
-    if (!form.tags || form.tags.trim() === '') {
-      errors.tags = 'En az bir etiket gereklidir';
+    if (!form.tech_stack || form.tech_stack.trim() === '') {
+      errors.tech_stack = 'En az bir etiket gereklidir';
       isValid = false;
     }
     
