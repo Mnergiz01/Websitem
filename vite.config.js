@@ -10,4 +10,12 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
+  server: {
+    historyApiFallback: true
+  },
+  build: {
+    rollupOptions: {
+      input: 'index.html'
+    }
+  }
 })
